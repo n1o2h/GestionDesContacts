@@ -32,7 +32,7 @@ function register($conn){
 
       if (!empty($errors)) {
             // Stocke les erreurs dans la session et redirige
-            $_SESSION["register_error"] = implode("<br>", $errors);  // Concatène les erreurs pour affichage
+            $_SESSION["register_error"] = implode("<br>", $errors);  
             header("Location: ../pages/registerForm.php");
             exit();
       }
@@ -45,14 +45,15 @@ function register($conn){
             $stmt->execute([$username, $email, $password, $inscription_date]);
             
             // Succès : set sessions pour connexion automatique
-            $user_id = $conn->lastInsertId();  // Récupère l'ID du nouvel utilisateur
+            // Récupère l'ID du nouvel utilisateur
+            $user_id = $conn->lastInsertId();  
             $_SESSION["id_user"] = $user_id;
             $_SESSION['username'] = $username;
             $_SESSION["inscription_date"] = $inscription_date;
-            $_SESSION["login_time"] = date('H:i:s');  // Heure de connexion pour affichage
+            $_SESSION["login_time"] = date('H:i:s'); 
             
             unset($_SESSION["register_error"]);
-            header("Location: ../pages/profile.php");  // Redirection directe vers profil
+            header("Location: ../pages/profile.php");  
             exit();
       } catch (PDOException $e) {
             $_SESSION["register_error"] = "Erreur lors de l'inscription : " . $e->getMessage();
@@ -70,34 +71,30 @@ function login($conn){
       if (!empty($errors)) {
             $_SESSION["login_error"] = implode("<br>", $errors);
             redirectToLogin();
-            exit();  // Empêche l'exécution suivante
+            exit();  
       }
 
-      // Requête DB optimisée avec gestion d'erreurs
       try {
             $sql = "SELECT id, username, password, inscription_date FROM users WHERE username = ?";  // Sélectionne seulement ce qui est nécessaire
             $stmt = $conn->prepare($sql);
             $stmt->execute([$username]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Vérification sécurisée : user existe ET mot de passe correct
             if ($user && password_verify($password, $user['password'])) {
-                  // Succès : set sessions et redirige
                   $_SESSION["id_user"] = $user["id"];
                   $_SESSION['username'] = $user["username"];
                   $_SESSION["inscription_date"] = $user["inscription_date"];
+                  $_SESSION["login_time"] = date('H:i:s'); 
                   unset($_SESSION["login_error"]);
                   redirectToProfile();
-                  exit();  // Important : stop l'exécution
+                  exit();  
             } else {
-                  // Échec : message générique pour sécurité
                   $_SESSION['login_error'] = "Identifiants invalides.";
                   redirectToLogin();
                   exit();
             }
       } catch (PDOException $e) {
-            // Erreur DB : log interne et message générique
-            error_log("Erreur DB dans login : " . $e->getMessage());  // Pour debug, pas affiché à l'utilisateur
+            error_log("Erreur DB dans login : " . $e->getMessage());  
             $_SESSION['login_error'] = "Erreur serveur. Réessayez.";
             redirectToLogin();
             exit();
@@ -129,7 +126,6 @@ function validate_login_fields($username, $password) {
       
       return $errors;
 }
-// Fonctions de validation (si pas déjà définies ailleurs, ajoute-les ici)
 function is_valid_username($username) {
     return preg_match('/^[a-zA-Z0-9]{3,}$/', $username);  // ≥3 caractères alphanumériques
 }
@@ -148,25 +144,24 @@ function validate_registration_fields($username, $email, $password) {
       
       // Vérification des champs vides (comme dans ton code commenté)
       if (empty($username) || empty($email) || empty($password) || $username === "" || $email === "" || $password === "") {
-            $errors[] = 'All fields required';  // Message adapté (ton code avait 'All filds required')
+            // Message adapté (ton code avait 'All filds required')
+            $errors[] = 'All fields required';  
       } else {
             // Validations spécifiques si les champs ne sont pas vides
             if (!is_valid_username($username)) {
-                  $errors[] = 'Il faut avoir un nom contenant plus de 3 caractères';  // Ton message original
+
+                  $errors[] = 'Il faut avoir un nom contenant plus de 3 caractères';  
             }
             if (!is_valid_password($password)) {
-                  $errors[] = 'Il faut avoir un mot de passe de plus que 6 caractères';  // Ton message original
+                  $errors[] = 'Il faut avoir un mot de passe de plus que 6 caractères';  
             }
             if (!is_valid_email($email)) {
-                  $errors[] = 'Email est non valide';  // Ton message original
+                  $errors[] = 'Email est non valide';  
             }
             
       }
       
-    return $errors;  // Retourne l'array d'erreurs (vide si valide)
+      return $errors;  
 }
-
-// ... (le reste de ton code)
-
 
 ?>

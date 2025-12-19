@@ -1,4 +1,3 @@
--- Active: 1764803914860@@127.0.0.1@3306@test
 CREATE DATABASE gcontact;
 
 USE gcontact;
@@ -16,6 +15,16 @@ CREATE TABLE contacts (
       lastname varchar(50),
       email varchar(50),
       telephone varchar(50),
+      adresse VARCHAR(50),
       id_user INT,
       FOREIGN KEY (id_user) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE= INNODB;
+
+
+
+INSERT INTO contacts (firstname, lastname, email, telephone) VALUES (
+      'nohaila', 'ait hammad', 'e@gmail.com', '064444444'
+);
+INSERT INTO contacts (firstname, lastname, email, telephone) VALUES (
+      'walid', 'ait hammad', 'e@gmail.com', '064444444'
+);

@@ -1,6 +1,5 @@
 <?php  
 include_once '../includes/header.php';
-// require_once '../config/connexion.php';
 ?>
 
       <!-- Section centrale -->

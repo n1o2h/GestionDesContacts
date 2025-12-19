@@ -31,9 +31,6 @@
 
             .hero {
                   height: calc(100vh - 56px);
-                  /* background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); */
-                  /* background: linear-gradient(135deg, #1e3c72, #2a5298); */
-                  /* background: linear-gradient(135deg, #141e30, #243b55); */
                   background: linear-gradient(135deg, #1E3C72, #2A5298);
             }
       </style>

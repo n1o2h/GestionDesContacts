@@ -38,8 +38,6 @@ session_start();
                                     <label for="password" class="form-label">Mot de Pass</label>
                                     <input type="password" id="password" name="password"
                                           placeholder="Entrer mot de pass" class="form-control" >
-                                          
-                                         
                               </div>
                               <div class="pb-3 px-5 d-flex align-items-center justify-content-end gap-4">
                                     <button class="btn btn-success w-100 fw-bold" name="submit" type="submit"  value="login" >Se Connecter</button>
@@ -54,6 +52,8 @@ session_start();
                   </div>
             </div>
       </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>
