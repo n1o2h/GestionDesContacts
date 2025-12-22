@@ -20,6 +20,7 @@ function getConnexion(){
                         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
                   ]
             );
+            var_dump($connexion);
             return $connexion;
       } catch (PDOException $e) {
                   
